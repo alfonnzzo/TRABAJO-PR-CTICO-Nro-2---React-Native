@@ -9,7 +9,7 @@ const CityForm = ({ onAddCity }) => {
     e.preventDefault();
     
     if (!name.trim()) {
-      setError('⚠️ El nombre de la ciudad es obligatorio');
+      setError('El nombre de la ciudad es obligatorio');
       return;
     }
 
@@ -25,7 +25,7 @@ const CityForm = ({ onAddCity }) => {
     <form 
       onSubmit={handleSubmit} 
       style={{ 
-        backgroundColor: '#16161a', // Fondo oscuro principal
+        backgroundColor: '#16161a',
         borderRadius: '16px', 
         padding: '24px', 
         boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
@@ -35,7 +35,7 @@ const CityForm = ({ onAddCity }) => {
       }}
     >
       <h3 style={{ margin: '0 0 20px 0', fontSize: '20px', borderBottom: '1px solid #242629', paddingBottom: '10px' }}>
-        ➕ Agregar Nueva Ciudad
+         Agregar Nueva Ciudad
       </h3>
 
       <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
@@ -60,15 +60,12 @@ const CityForm = ({ onAddCity }) => {
               transition: 'border-color 0.2s',
               boxSizing: 'border-box'
             }}
-            // Efectos de foco
             onFocus={(e) => !error && (e.target.style.border = '1px solid #7f5af0')}
             onBlur={(e) => !error && (e.target.style.border = '1px solid #242629')}
           />
-          {/* Mensaje de error condicional */}
           {error && <span style={{ color: '#ef4565', fontSize: '13px', fontWeight: 'bold' }}>{error}</span>}
         </div>
 
-        {/* Contenedor del Input País */}
         <div style={{ flex: '1', minWidth: '100px' }}>
           <input 
             type="text" 
@@ -91,7 +88,6 @@ const CityForm = ({ onAddCity }) => {
           />
         </div>
 
-        {/* Botón Guardar */}
         <button 
           type="submit"
           style={{
@@ -103,7 +99,7 @@ const CityForm = ({ onAddCity }) => {
             fontWeight: 'bold',
             cursor: 'pointer',
             transition: 'background-color 0.2s, transform 0.1s',
-            height: '42px' // Altura fija para que alinee perfecto con los inputs
+            height: '42px' 
           }}
           onMouseOver={(e) => e.target.style.backgroundColor = '#6b46c1'}
           onMouseOut={(e) => e.target.style.backgroundColor = '#7f5af0'}

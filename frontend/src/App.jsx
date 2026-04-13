@@ -60,15 +60,12 @@ function App() {
   return (
     <div style={{ maxWidth: '900px', margin: '40px auto', padding: '0 20px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
-      {/* Título Principal */}
       <h1 style={{ color: '#fffffe', textAlign: 'center', marginBottom: '40px', fontSize: '36px' }}>
       WeatherDash
       </h1>
       
-      {/* 1. Formulario para agregar */}
       <CityForm onAddCity={addCity} />
 
-      {/* 2. Buscador en modo oscuro */}
       <div style={{ marginBottom: '30px' }}>
         <input 
           type="text" 
