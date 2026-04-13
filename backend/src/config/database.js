@@ -22,7 +22,7 @@ const testConnection = async () => {
     await sequelize.sync({ alter: true });
     console.log("✅ Tablas sincronizadas correctamente");
   } catch (error) {
-    console.error("❌ No se pudo conectar a la DB:", error);
+    console.error("No se pudo conectar a la DB:", error);
     process.exit(1);
   }
 };
