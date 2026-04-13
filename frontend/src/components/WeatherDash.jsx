@@ -1,7 +1,6 @@
 import { useWeather } from '../hooks/useWeather';
 
 export default function WeatherDash({ ciudadesDesdeApp = [], onDelete }) {
-  // Ahora el componente solo le pide los climas al Hook, ¡y se olvida del fetch!
   const { climas } = useWeather(ciudadesDesdeApp);
 
   const traducirClima = (codigo) => {
@@ -111,7 +110,7 @@ export default function WeatherDash({ ciudadesDesdeApp = [], onDelete }) {
                   </div>
                 </>
               ) : (
-                <p style={{ color: '#94a1b2' }}>Conectando con satélite... 🛰️</p>
+                <p style={{ color: '#94a1b2' }}>Conectando con satélite...</p>
               )}
             </div>
           );

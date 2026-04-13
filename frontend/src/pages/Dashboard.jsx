@@ -4,11 +4,9 @@ import WeatherDash from '../components/WeatherDash';
 import { useCities } from '../hooks/useCities';
 
 export default function Dashboard() {
-  // Traemos toda la lógica desde nuestro Custom Hook
   const { cities, loading, error, addCity, deleteCity } = useCities();
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Estilos globales de la página
   useEffect(() => {
     document.body.style.backgroundColor = '#0f0e17';
     document.body.style.margin = '0';
@@ -23,7 +21,7 @@ export default function Dashboard() {
     <div style={{ maxWidth: '900px', margin: '40px auto', padding: '0 20px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
       <h1 style={{ color: '#fffffe', textAlign: 'center', marginBottom: '40px', fontSize: '36px' }}>
-        🌤️ WeatherDash
+        WeatherDash
       </h1>
       
       <CityForm onAddCity={addCity} />
@@ -31,7 +29,7 @@ export default function Dashboard() {
       <div style={{ marginBottom: '30px' }}>
         <input 
           type="text" 
-          placeholder="🔍 Buscar ciudad en tu panel..." 
+          placeholder="Buscar ciudad en tu panel..." 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{ 
@@ -47,7 +45,7 @@ export default function Dashboard() {
       {loading && <p style={{ color: '#94a1b2', textAlign: 'center' }}>Cargando tus ciudades...</p>}
       {error && <p style={{ color: '#ef4565', textAlign: 'center' }}>Error de conexión: {error}</p>}
       {!loading && !error && filteredCities.length === 0 && (
-        <p style={{ color: '#94a1b2', textAlign: 'center' }}>No hay ciudades en tu panel. ¡Agregá una arriba!</p>
+        <p style={{ color: '#94a1b2', textAlign: 'center' }}>No hay ciudades en tu panel. Agregá una arriba.</p>
       )}
 
       <WeatherDash ciudadesDesdeApp={filteredCities} onDelete={deleteCity} />
