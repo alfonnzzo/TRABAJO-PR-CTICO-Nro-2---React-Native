@@ -1,45 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useWeather } from '../hooks/useWeather';
 
 export default function WeatherDash({ ciudadesDesdeApp = [], onDelete }) {
-  const [climas, setClimas] = useState({});
-
-  const obtenerClima = async (nombreCiudad) => {
-    if (!nombreCiudad) return; 
-
-    try {
-      const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${nombreCiudad}&count=1&language=es&format=json`;
-      const geoRes = await fetch(geoUrl);
-      const geoData = await geoRes.json();
-
-      if (!geoData.results || geoData.results.length === 0) return;
-
-      const { latitude, longitude } = geoData.results[0];
-
-      const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=weathercode,temperature_2m_max,temperature_2m_min&hourly=temperature_2m&timezone=auto`;
-      const weatherRes = await fetch(weatherUrl);
-      const weatherData = await weatherRes.json();
-      
-      if (weatherRes.ok) {
-        setClimas(prevClimas => ({ 
-          ...prevClimas, 
-          [nombreCiudad]: {
-            actual: weatherData.current_weather,
-            diario: weatherData.daily,
-            porHora: weatherData.hourly
-          }
-        }));
-      }
-    } catch (error) {
-      console.error("Error al buscar el clima de", nombreCiudad);
-    }
-  };
-
-  useEffect(() => {
-    if (!ciudadesDesdeApp || ciudadesDesdeApp.length === 0) return;
-    ciudadesDesdeApp.forEach(ciudad => {
-      if (!climas[ciudad.name]) obtenerClima(ciudad.name);
-    });
-  }, [ciudadesDesdeApp, climas]);
+  // Ahora el componente solo le pide los climas al Hook, ¡y se olvida del fetch!
+  const { climas } = useWeather(ciudadesDesdeApp);
 
   const traducirClima = (codigo) => {
     const codigos = {
@@ -61,10 +24,9 @@ export default function WeatherDash({ ciudadesDesdeApp = [], onDelete }) {
 
   return (
     <div style={{ padding: '20px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      
       <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: '20px' }}>
         {ciudadesDesdeApp.map(ciudad => {
-          const nombre = ciudad.name;
+          const nombre = ciudad.name || ciudad.nombre;
           const datosCiudad = climas[nombre];
 
           return (
@@ -83,21 +45,11 @@ export default function WeatherDash({ ciudadesDesdeApp = [], onDelete }) {
               <button 
                 onClick={() => onDelete(ciudad.id)}
                 style={{
-                  position: 'absolute',
-                  top: '20px',
-                  right: '20px',
-                  backgroundColor: '#ef4565',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '50%',
-                  width: '32px',
-                  height: '32px',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'background-color 0.2s'
+                  position: 'absolute', top: '20px', right: '20px',
+                  backgroundColor: '#ef4565', color: 'white', border: 'none',
+                  borderRadius: '50%', width: '32px', height: '32px',
+                  cursor: 'pointer', fontWeight: 'bold', display: 'flex',
+                  alignItems: 'center', justifyContent: 'center', transition: 'background-color 0.2s'
                 }}
                 onMouseOver={(e) => e.target.style.backgroundColor = '#d33350'}
                 onMouseOut={(e) => e.target.style.backgroundColor = '#ef4565'}
@@ -129,12 +81,8 @@ export default function WeatherDash({ ciudadesDesdeApp = [], onDelete }) {
                   <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '10px', marginBottom: '24px' }}>
                     {datosCiudad.diario.time.slice(0, 7).map((fecha, index) => (
                       <div key={fecha} style={{ 
-                        backgroundColor: '#242629', 
-                        borderRadius: '12px', 
-                        padding: '12px', 
-                        minWidth: '60px',
-                        textAlign: 'center',
-                        flex: '1'
+                        backgroundColor: '#242629', borderRadius: '12px', padding: '12px', 
+                        minWidth: '60px', textAlign: 'center', flex: '1'
                       }}>
                         <p style={{ margin: '0 0 8px 0', color: '#94a1b2', fontSize: '14px' }}>{obtenerDiaSemana(fecha)}</p>
                         <p style={{ margin: '0', fontWeight: 'bold' }}>{Math.round(datosCiudad.diario.temperature_2m_max[index])}°</p>
@@ -151,10 +99,8 @@ export default function WeatherDash({ ciudadesDesdeApp = [], onDelete }) {
                         <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '15%' }}>
                           <span style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '8px' }}>{Math.round(temp)}°</span>
                           <div style={{ 
-                            width: '4px', 
-                            height: `${(temp / 40) * 80}px`, 
-                            backgroundColor: '#7f5af0', 
-                            borderRadius: '4px' 
+                            width: '4px', height: `${(temp / 40) * 80}px`, 
+                            backgroundColor: '#7f5af0', borderRadius: '4px' 
                           }}></div>
                           <span style={{ fontSize: '12px', color: '#94a1b2', marginTop: '8px' }}>
                             {(new Date().getHours() + index) % 24}:00
@@ -165,9 +111,8 @@ export default function WeatherDash({ ciudadesDesdeApp = [], onDelete }) {
                   </div>
                 </>
               ) : (
-                <p style={{ color: '#94a1b2' }}>Conectando con satélite... </p>
+                <p style={{ color: '#94a1b2' }}>Conectando con satélite... 🛰️</p>
               )}
-
             </div>
           );
         })}
