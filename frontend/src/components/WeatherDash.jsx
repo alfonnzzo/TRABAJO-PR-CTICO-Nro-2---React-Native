@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import { useWeather } from '../hooks/useWeather';
+import { CityContext } from '../context/CityContext';
 
-export default function WeatherDash({ ciudadesDesdeApp = [], onDelete }) {
+export default function WeatherDash({ ciudadesDesdeApp = [] }) {
+  const { deleteCity } = useContext(CityContext);
   const { climas } = useWeather(ciudadesDesdeApp);
 
   const traducirClima = (codigo) => {
@@ -42,7 +45,8 @@ export default function WeatherDash({ ciudadesDesdeApp = [], onDelete }) {
             }}>
               
               <button 
-                onClick={() => onDelete(ciudad.id)}
+                // Ejecutamos la función del contexto pasándole el ID
+                onClick={() => deleteCity(ciudad.id)}
                 style={{
                   position: 'absolute', top: '20px', right: '20px',
                   backgroundColor: '#ef4565', color: 'white', border: 'none',

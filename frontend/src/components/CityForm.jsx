@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { CityContext } from '../context/CityContext';
 
-const CityForm = ({ onAddCity }) => {
+const CityForm = () => {
+  const { addCity } = useContext(CityContext);
+  
   const [name, setName] = useState('');
   const [country, setCountry] = useState('');
   const [error, setError] = useState(''); 
@@ -15,7 +18,7 @@ const CityForm = ({ onAddCity }) => {
 
     setError(''); 
     
-    onAddCity({ name, country: country || 'AR' });
+    addCity({ name, country: country || 'AR' });
     
     setName('');
     setCountry('');
@@ -53,7 +56,7 @@ const CityForm = ({ onAddCity }) => {
               width: '100%', 
               padding: '12px 16px', 
               backgroundColor: '#242629', 
-              border: error ? '1px solid #ef4565' : '1px solid #242629', // Borde rojo si hay error
+              border: error ? '1px solid #ef4565' : '1px solid #242629',
               borderRadius: '8px',
               color: '#fffffe',
               outline: 'none',

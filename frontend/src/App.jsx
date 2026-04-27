@@ -1,8 +1,11 @@
 import Dashboard from './pages/Dashboard';
+import { CityProvider } from './context/CityContext';
 
 function App() {
   return (
-    <Dashboard />
+    <CityProvider>
+      <Dashboard />
+    </CityProvider>
   );
 }
 

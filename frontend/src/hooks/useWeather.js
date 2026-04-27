@@ -7,7 +7,6 @@ export const useWeather = (ciudades = []) => {
     if (!ciudades || ciudades.length === 0) return;
 
     const obtenerClima = async (nombreCiudad) => {
-      // Si ya tenemos el clima, no lo volvemos a pedir
       if (!nombreCiudad || climas[nombreCiudad]) return; 
 
       try {

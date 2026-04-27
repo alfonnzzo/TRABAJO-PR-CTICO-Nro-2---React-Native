@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import CityForm from '../components/CityForm';
 import WeatherDash from '../components/WeatherDash';
-import { useCities } from '../hooks/useCities';
+import { CityContext } from '../context/CityContext';
 
 export default function Dashboard() {
-  const { cities, loading, error, addCity, deleteCity } = useCities();
+  const { cities, loading, error } = useContext(CityContext);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Dashboard() {
         WeatherDash
       </h1>
       
-      <CityForm onAddCity={addCity} />
+      <CityForm />
 
       <div style={{ marginBottom: '30px' }}>
         <input 
@@ -48,7 +48,7 @@ export default function Dashboard() {
         <p style={{ color: '#94a1b2', textAlign: 'center' }}>No hay ciudades en tu panel. Agregá una arriba.</p>
       )}
 
-      <WeatherDash ciudadesDesdeApp={filteredCities} onDelete={deleteCity} />
+      <WeatherDash ciudadesDesdeApp={filteredCities} />
     </div>
   );
 }
