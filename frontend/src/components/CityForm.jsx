@@ -1,7 +1,7 @@
-import { useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { CityContext } from '../context/CityContext';
 
-const CityForm = () => {
+const CityForm = React.memo(() => {
   const { addCity } = useContext(CityContext);
   
   const [name, setName] = useState('');
@@ -23,7 +23,6 @@ const CityForm = () => {
     setName('');
     setCountry('');
   };
-
   return (
     <form 
       onSubmit={handleSubmit} 
@@ -115,6 +114,6 @@ const CityForm = () => {
       </div>
     </form>
   );
-};
+});
 
 export default CityForm;
