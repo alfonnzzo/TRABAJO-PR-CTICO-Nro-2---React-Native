@@ -7,7 +7,7 @@ const API_URL = 'http://localhost:3001/api/cities';
 
 export const CityProvider = ({ children }) => {
   const [cities, dispatch] = useReducer(cityReducer, []);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

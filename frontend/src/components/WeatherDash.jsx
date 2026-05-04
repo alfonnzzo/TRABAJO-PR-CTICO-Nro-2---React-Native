@@ -1,28 +1,15 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { useWeather } from '../hooks/useWeather';
 import { CityContext } from '../context/CityContext';
 
-export default function WeatherDash({ ciudadesDesdeApp = [] }) {
+const WeatherDash = React.memo(({ ciudadesDesdeApp = [] }) => {
   const { deleteCity } = useContext(CityContext);
   const { climas } = useWeather(ciudadesDesdeApp);
 
-  const traducirClima = (codigo) => {
-    const codigos = {
-      0: 'Despejado', 1: 'Mayormente despejado', 2: 'Parcialmente nublado', 3: 'Nublado',
-      45: 'Niebla', 48: 'Niebla escarcha',
-      51: 'Llovizna', 53: 'Llovizna', 55: 'Llovizna',
-      61: 'Lluvia leve', 63: 'Lluvia moderada', 65: 'Lluvia fuerte',
-      80: 'Chubascos', 81: 'Chubascos', 82: 'Tormenta',
-      95: 'Tormenta', 96: 'Tormenta', 99: 'Tormenta'
-    };
-    return codigos[codigo] || 'Desconocido';
-  };
+  const traducirClima = (codigo) => { /* ... tu lógica igual ... */ };
+  const obtenerDiaSemana = (fechaString) => { /* ... tu lógica igual ... */ };
 
-  const obtenerDiaSemana = (fechaString) => {
-    const dias = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-    const fecha = new Date(fechaString + 'T00:00:00');
-    return dias[fecha.getDay()];
-  };
+  console.log("Renderizando WeatherDash...");
 
   return (
     <div style={{ padding: '20px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
@@ -122,4 +109,6 @@ export default function WeatherDash({ ciudadesDesdeApp = [] }) {
       </div>
     </div>
   );
-}
+});
+
+export default WeatherDash;
